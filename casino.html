@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Казино — Крист ТВ</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle, #1a0000, #2d0a0a, #0a0a1a);
+            font-family: Arial, sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .card {
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(10px);
+            padding: 35px 25px;
+            border-radius: 40px;
+            border: 2px solid rgba(255,215,0,0.3);
+            max-width: 550px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 80px rgba(255,215,0,0.1);
+        }
+        h1 {
+            font-size: 38px;
+            text-shadow: 0 0 30px #ffd700;
+            color: #ffd700;
+            margin-bottom: 5px;
+        }
+        .slogan {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 30px #ff00c8, 0 0 60px #9900ff;
+            margin: 5px 0 15px 0;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.02); }
+        }
+        .balance {
+            font-size: 24px;
+            color: #00ff88;
+            background: rgba(0,255,136,0.1);
+            padding: 10px 20px;
+            border-radius: 30px;
+            display: inline-block;
+            margin: 10px 0 20px 0;
+            border: 1px solid rgba(0,255,136,0.2);
+        }
+        .balance span {
+            font-weight: bold;
+            font-size: 28px;
+        }
+        .game-area {
+            background: rgba(255,255,255,0.05);
+            padding: 25px;
+            border-radius: 30px;
+            margin: 15px 0;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .slot-machine {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .slot {
+            width: 80px;
+            height: 100px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 48px;
+            border: 2px solid rgba(255,215,0,0.2);
+            transition: 0.3s;
+        }
+        .slot.win {
+            border-color: #ffd700;
+            box-shadow: 0 0 40px rgba(255,215,0,0.5);
+        }
+        .bet-input {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+        .bet-input input {
+            width: 120px;
+            padding: 12px;
+            font-size: 20px;
+            border-radius: 20px;
+            border: 2px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            text-align: center;
+            outline: none;
+        }
+        .bet-input input:focus {
+            border-color: #ffd700;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+        .btn {
+            padding: 14px 30px;
+            border-radius: 30px;
+            border: none;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            color: white;
+        }
+        .btn-gold {
+            background: linear-gradient(45deg, #ffd700, #ff8c00);
+            box-shadow: 0 0 30px rgba(255,215,0,0.3);
+        }
+        .btn-gold:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(255,215,0,0.5);
+        }
+        .btn-red {
+            background: linear-gradient(45deg, #ff0040, #cc0033);
+            box-shadow: 0 0 30px rgba(255,0,64,0.3);
+        }
+        .btn-red:hover {
+            transform: scale(1.05);
+        }
+        .btn-gray {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .btn-gray:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .message {
+            font-size: 20px;
+            padding: 15px;
+            border-radius: 20px;
+            margin: 15px 0;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .message.win {
+            background: rgba(0,255,100,0.1);
+            border: 1px solid #00ff64;
+            color: #00ff64;
+        }
+        .message.lose {
+            background: rgba(255,0,0,0.1);
+            border: 1px solid #ff4444;
+            color: #ff4444;
+        }
+        .message.info {
+            background: rgba(255,215,0,0.1);
+            border: 1px solid #ffd700;
+            color: #ffd700;
+        }
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 14px 40px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 60px;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.05);
+            width: 100%;
+        }
+        .back:hover {
+            background: rgba(255,215,0,0.1);
+            border-color: #ffd700;
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 30px; }
+            .slogan { font-size: 20px; }
+            .slot { width: 60px; height: 80px; font-size: 36px; }
+            .btn { font-size: 16px; padding: 12px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🎰 КАЗИНО</h1>
+        <div class="slogan">🔥 Выигрывай! Крист подскажет 🔥</div>
+        <div class="balance">💰 Баланс: <span id="balance">1000</span> 🪙</div>
+
+        <div class="game-area">
+            <div class="slot-machine">
+                <div class="slot" id="slot1">🍒</div>
+                <div class="slot" id="slot2">🍒</div>
+                <div class="slot" id="slot3">🍒</div>
+            </div>
+
+            <div class="bet-input">
+                <input type="number" id="betInput" min="1" value="50" placeholder="Ставка">
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-gold" onclick="spin()">🎡 Крутить!</button>
+                <button class="btn btn-red" onclick="resetCasino()">🔄 Сброс</button>
+            </div>
+
+            <div class="message info" id="casinoMessage">🎲 Сделайте ставку и крутите!</div>
+        </div>
+
+        <a href="index.html" class="back">← На главную</a>
+    </div>
+
+    <script>
+        let balance = 1000;
+        const emojis = ['🍒', '🍋', '🍊', '🍇', '💎', '⭐', '🎰', '💰'];
+
+        function spin() {
+            const bet = parseInt(document.getElementById('betInput').value);
+            const message = document.getElementById('casinoMessage');
+
+            if (isNaN(bet) || bet < 1) {
+                message.textContent = '⚠️ Введите ставку (минимум 1)';
+                message.className = 'message info';
+                return;
+            }
+
+            if (bet > balance) {
+                message.textContent = '❌ Недостаточно монет! Ваш баланс: ' + balance;
+                message.className = 'message lose';
+                return;
+            }
+
+            const slot1 = document.getElementById('slot1');
+            const slot2 = document.getElementById('slot2');
+            const slot3 = document.getElementById('slot3');
+
+            let count = 0;
+            const interval = setInterval(() => {
+                slot1.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                slot2.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                slot3.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                count++;
+                if (count > 10) {
+                    clearInterval(interval);
+                    finishSpin(bet);
+                }
+            }, 100);
+        }
+
+        function finishSpin(bet) {
+            const slot1 = document.getElementById('slot1');
+            const slot2 = document.getElementById('slot2');
+            const slot3 = document.getElementById('slot3');
+            const message = document.getElementById('casinoMessage');
+
+            const results = [
+                emojis[Math.floor(Math.random() * emojis.length)],
+                emojis[Math.floor(Math.random() * emojis.length)],
+                emojis[Math.floor(Math.random() * emojis.length)]
+            ];
+
+            slot1.textContent = results[0];
+            slot2.textContent = results[1];
+            slot3.textContent = results[2];
+
+            document.querySelectorAll('.slot').forEach(s => s.classList.remove('win'));
+
+            if (results[0] === results[1] && results[1] === results[2]) {
+                const winAmount = bet * 10;
+                balance += winAmount;
+                document.getElementById('balance').textContent = balance;
+                message.textContent = `🎉 ДЖЕКПОТ! Вы выиграли ${winAmount} монет! 🎉`;
+                message.className = 'message win';
+                document.querySelectorAll('.slot').forEach(s => s.classList.add('win'));
+            } else if (results[0] === results[1] || results[1] === results[2] || results[0] === results[2]) {
+                const winAmount = bet * 2;
+                balance += winAmount;
+                document.getElementById('balance').textContent = balance;
+                message.textContent = `🎊 Два одинаковых! Вы выиграли ${winAmount} монет!`;
+                message.className = 'message win';
+                if (results[0] === results[1]) { document.getElementById('slot1').classList.add('win'); document.getElementById('slot2').classList.add('win'); }
+                if (results[1] === results[2]) { document.getElementById('slot2').classList.add('win'); document.getElementById('slot3').classList.add('win'); }
+                if (results[0] === results[2]) { document.getElementById('slot1').classList.add('win'); document.getElementById('slot3').classList.add('win'); }
+            } else {
+                balance -= bet;
+                document.getElementById('balance').textContent = balance;
+                message.textContent = `😞 Проигрыш! -${bet} монет. Попробуйте ещё!`;
+                message.className = 'message lose';
+            }
+
+            if (balance <= 0) {
+                balance = 0;
+                document.getElementById('balance').textContent = balance;
+                message.textContent = '💀 Вы проиграли всё! Нажмите "Сброс" для новой игры';
+                message.className = 'message lose';
+            }
+        }
+
+        function resetCasino() {
+            balance = 1000;
+            document.getElementById('balance').textContent = balance;
+            document.getElementById('casinoMessage').textContent = '🔄 Баланс сброшен! Играйте снова!';
+            document.getElementById('casinoMessage').className = 'message info';
+            document.querySelectorAll('.slot').forEach(s => {
+                s.textContent = '🍒';
+                s.classList.remove('win');
+            });
+            document.getElementById('betInput').value = 50;
+        }
+    </script>
+</body>
+</html>

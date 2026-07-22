@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Опрос</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { min-height:100vh; background: radial-gradient(circle,#1a0533,#0a0a1a); font-family:Arial,sans-serif; color:white; display:flex; justify-content:center; align-items:center; padding:20px; }
+.card { background:rgba(0,0,0,0.7); backdrop-filter:blur(10px); padding:40px 30px; border-radius:40px; border:2px solid rgba(255,255,255,0.15); max-width:600px; width:100%; box-shadow:0 0 60px rgba(153,0,255,0.3); }
+h1 { text-align:center; font-size:34px; text-shadow:0 0 20px #ff00c8; margin-bottom:30px; }
+.poll-item { background:rgba(255,255,255,0.08); padding:18px 20px; border-radius:20px; margin:12px 0; display:flex; justify-content:space-between; align-items:center; cursor:pointer; transition:0.3s; }
+.poll-item:hover { background:rgba(255,0,200,0.2); }
+.poll-item .label { font-size:20px; }
+.poll-item .votes { color:#ffcc00; font-size:16px; }
+.back { display:inline-block; margin-top:30px; padding:15px 40px; background:rgba(255,255,255,0.15); border-radius:60px; color:white; text-decoration:none; text-align:center; width:100%; }
+</style>
+</head>
+<body>
+<div class="card">
+<h1>📊 Опрос: Лучшая программа?</h1>
+<div class="poll-item"><span class="label">🏠 Доброе утро</span><span class="votes">❤️ 45</span></div>
+<div class="poll-item"><span class="label">🎮 Игровой стрим</span><span class="votes">❤️ 32</span></div>
+<div class="poll-item"><span class="label">🍳 Кулинарный мастер-класс</span><span class="votes">❤️ 28</span></div>
+<div class="poll-item"><span class="label">🎬 Фильм дня</span><span class="votes">❤️ 37</span></div>
+<div class="poll-item"><span class="label">🎤 Концерт по заявкам</span><span class="votes">❤️ 19</span></div>
+<a href="index.html" class="back">← На главную</a>
+</div>
+</body>
+</html>

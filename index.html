@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Крист ТВ</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle, #0a0015, #1a0533);
+            font-family: Arial, sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .card {
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(10px);
+            padding: 35px 25px;
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(153,0,255,0.15);
+            transition: 0.3s;
+        }
+        /* ===== НАДПИСЬ О РАЗРАБОТКЕ ===== */
+        .dev-badge {
+            background: rgba(255,215,0,0.15);
+            border: 1px solid #ffcc00;
+            color: #ffcc00;
+            padding: 10px 16px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        h1 {
+            font-size: 38px;
+            text-shadow: 0 0 20px #ff00c8;
+            margin-bottom: 8px;
+        }
+        .sub {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffcc00;
+            text-shadow: 0 0 20px #ffcc00;
+            margin-bottom: 20px;
+        }
+        .menu a {
+            display: block;
+            padding: 16px;
+            margin: 10px 0;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 19px;
+            transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .menu a:hover {
+            background: rgba(255,0,200,0.15);
+            transform: translateX(8px);
+            border-color: #ff00c8;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 16px 50px;
+            background: linear-gradient(45deg, #ff00c8, #9900ff);
+            border-radius: 60px;
+            color: white;
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: bold;
+            box-shadow: 0 0 30px rgba(255,0,200,0.3);
+            transition: 0.3s;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(255,0,200,0.5);
+        }
+        #musicBtn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            font-size: 26px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+            z-index: 999;
+        }
+        #musicBtn:hover {
+            background: #ff00c8;
+            transform: scale(1.1);
+        }
+        .update-info {
+            margin-top: 15px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.3);
+        }
+        .live-badge {
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 60px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            background: rgba(0,255,100,0.15);
+            color: #00ff64;
+            border: 1px solid #00ff64;
+            animation: pulse 2s infinite;
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 30px; }
+            .sub { font-size: 20px; }
+            .menu a { font-size: 17px; padding: 14px; }
+            .btn { font-size: 19px; padding: 14px 35px; }
+            #musicBtn { width: 50px; height: 50px; font-size: 22px; }
+            .live-badge { font-size: 14px; padding: 5px 14px; }
+            .dev-badge { font-size: 12px; padding: 8px 14px; }
+        }
+    </style>
+</head>
+<body>
+
+    <button id="musicBtn" onclick="toggleMusic()">🔊</button>
+
+    <div class="card">
+
+        <!-- ===== НАДПИСЬ О РАЗРАБОТКЕ ===== -->
+        <div class="dev-badge">
+            ⚠️ Сайт ещё в разработке, все ошибки и недочёты будут исправлены
+        </div>
+
+        <h1>📺 Крист ТВ</h1>
+        <div class="live-badge">🔴 Сейчас в эфире</div>
+        <div class="sub">Все новости здесь!</div>
+        <div class="menu">
+            <a href="schedule.html">📅 Расписание</a>
+            <a href="news.html">📰 Новости</a>
+            <a href="hosts.html">🎤 Ведущие</a>
+            <a href="gallery.html">🖼 Галерея</a>
+            <a href="poll.html">📊 Опрос</a>
+            <a href="about.html">ℹ️ О канале</a>
+            <a href="contacts.html">📞 Контакты</a>
+            <a href="game.html">🎯 Игра</a>
+            <a href="casino.html">🎰 Казино</a>
+            <a href="live-firebase.html">📺 Эфир</a>
+        </div>
+        <a href="schedule.html" class="btn">Смотреть сейчас</a>
+        <div class="update-info">🔄 Обновление каждый день в 17:00</div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        let music = document.getElementById('bgMusic');
+        let musicBtn = document.getElementById('musicBtn');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                musicBtn.textContent = '🔇';
+            } else {
+                music.play().catch(() => {});
+                musicBtn.textContent = '🔊';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        document.addEventListener('click', function() {
+            if (!isPlaying) {
+                music.play().catch(() => {});
+                isPlaying = true;
+                musicBtn.textContent = '🔊';
+            }
+        }, { once: true });
+
+        function checkAndReload() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            if (hours === 17 && minutes === 0) {
+                location.reload();
+            }
+        }
+        setInterval(checkAndReload, 30000);
+    </script>
+</body>
+</html>

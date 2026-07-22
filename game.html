@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игра — Крист ТВ</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle, #0a0015, #1a0533);
+            font-family: Arial, sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .card {
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(10px);
+            padding: 35px 25px;
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(153,0,255,0.15);
+        }
+        h1 {
+            font-size: 34px;
+            text-shadow: 0 0 20px #ff00c8;
+            margin-bottom: 10px;
+        }
+        .sub {
+            font-size: 18px;
+            color: #aaaaff;
+            margin-bottom: 20px;
+        }
+        .number-box {
+            font-size: 72px;
+            font-weight: bold;
+            color: #ffcc00;
+            text-shadow: 0 0 40px #ffcc00;
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 30px;
+            margin: 20px 0;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+        input {
+            width: 80%;
+            padding: 16px;
+            font-size: 24px;
+            border-radius: 30px;
+            border: 2px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            text-align: center;
+            outline: none;
+            margin: 10px 0;
+        }
+        input:focus {
+            border-color: #ff00c8;
+            box-shadow: 0 0 30px rgba(255,0,200,0.3);
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+        .btn {
+            padding: 14px 35px;
+            border-radius: 60px;
+            border: none;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            color: white;
+        }
+        .btn-primary {
+            background: linear-gradient(45deg, #ff00c8, #9900ff);
+            box-shadow: 0 0 30px rgba(255,0,200,0.3);
+        }
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(255,0,200,0.5);
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .message {
+            font-size: 20px;
+            padding: 15px;
+            border-radius: 20px;
+            margin: 15px 0;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .message.win {
+            background: rgba(0,255,100,0.15);
+            border: 1px solid #00ff64;
+            color: #00ff64;
+        }
+        .message.lose {
+            background: rgba(255,0,0,0.15);
+            border: 1px solid #ff4444;
+            color: #ff4444;
+        }
+        .message.hint {
+            background: rgba(255,255,0,0.1);
+            border: 1px solid #ffcc00;
+            color: #ffcc00;
+        }
+        .attempts {
+            font-size: 16px;
+            color: #aaaaff;
+            margin: 10px 0;
+        }
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 14px 40px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 60px;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.05);
+            width: 100%;
+        }
+        .back:hover {
+            background: rgba(255,0,200,0.15);
+            border-color: #ff00c8;
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 28px; }
+            .number-box { font-size: 56px; padding: 15px; }
+            input { font-size: 20px; padding: 14px; }
+            .btn { font-size: 18px; padding: 12px 25px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🎯 Угадай число</h1>
+        <div class="sub">От 1 до 100</div>
+
+        <div class="number-box" id="guessDisplay">?</div>
+
+        <input type="number" id="guessInput" min="1" max="100" placeholder="Введите число">
+
+        <div class="btn-group">
+            <button class="btn btn-primary" onclick="checkGuess()">Проверить</button>
+            <button class="btn btn-secondary" onclick="resetGame()">🔄 Заново</button>
+        </div>
+
+        <div class="message" id="message">Введите число и нажмите "Проверить"</div>
+        <div class="attempts" id="attemptsDisplay">Попыток: 0</div>
+
+        <a href="index.html" class="back">← На главную</a>
+    </div>
+
+    <script>
+        let secretNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+        let gameOver = false;
+
+        function checkGuess() {
+            if (gameOver) {
+                document.getElementById('message').textContent = '🎮 Игра закончена! Нажмите "Заново"';
+                document.getElementById('message').className = 'message lose';
+                return;
+            }
+
+            const input = document.getElementById('guessInput');
+            const guess = parseInt(input.value);
+
+            if (isNaN(guess) || guess < 1 || guess > 100) {
+                document.getElementById('message').textContent = '⚠️ Введите число от 1 до 100!';
+                document.getElementById('message').className = 'message hint';
+                input.value = '';
+                input.focus();
+                return;
+            }
+
+            attempts++;
+            document.getElementById('attemptsDisplay').textContent = `Попыток: ${attempts}`;
+            document.getElementById('guessDisplay').textContent = guess;
+
+            const message = document.getElementById('message');
+
+            if (guess === secretNumber) {
+                message.textContent = `🎉 Поздравляю! Вы угадали за ${attempts} попыток! 🎉`;
+                message.className = 'message win';
+                document.getElementById('guessDisplay').style.color = '#00ff64';
+                gameOver = true;
+            } else if (guess < secretNumber) {
+                message.textContent = '📈 Больше! Загаданное число выше';
+                message.className = 'message hint';
+            } else {
+                message.textContent = '📉 Меньше! Загаданное число ниже';
+                message.className = 'message hint';
+            }
+
+            input.value = '';
+            input.focus();
+        }
+
+        function resetGame() {
+            secretNumber = Math.floor(Math.random() * 100) + 1;
+            attempts = 0;
+            gameOver = false;
+            document.getElementById('guessDisplay').textContent = '?';
+            document.getElementById('guessDisplay').style.color = '#ffcc00';
+            document.getElementById('message').textContent = 'Новая игра! Угадайте число от 1 до 100';
+            document.getElementById('message').className = 'message hint';
+            document.getElementById('attemptsDisplay').textContent = 'Попыток: 0';
+            document.getElementById('guessInput').value = '';
+            document.getElementById('guessInput').focus();
+        }
+
+        // Нажатие Enter для проверки
+        document.getElementById('guessInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkGuess();
+            }
+        });
+    </script>
+</body>
+</html>

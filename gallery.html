@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Галерея</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { min-height:100vh; background: radial-gradient(circle,#1a0533,#0a0a1a); font-family:Arial,sans-serif; color:white; display:flex; justify-content:center; align-items:center; padding:20px; }
+.card { background:rgba(0,0,0,0.7); backdrop-filter:blur(10px); padding:40px 30px; border-radius:40px; border:2px solid rgba(255,255,255,0.15); max-width:600px; width:100%; box-shadow:0 0 60px rgba(153,0,255,0.3); }
+h1 { text-align:center; font-size:34px; text-shadow:0 0 20px #ff00c8; margin-bottom:30px; }
+.gallery { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
+.gallery .item { background:rgba(255,255,255,0.08); border-radius:20px; padding:40px 20px; text-align:center; border:2px solid rgba(255,255,255,0.1); }
+.gallery .item .emoji { font-size:50px; }
+.gallery .item .label { margin-top:10px; font-size:14px; color:#aaaaff; }
+.back { display:inline-block; margin-top:30px; padding:15px 40px; background:rgba(255,255,255,0.15); border-radius:60px; color:white; text-decoration:none; text-align:center; width:100%; }
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🖼 Галерея</h1>
+<div class="gallery">
+<div class="item"><div class="emoji">📸</div><div class="label">Студия</div></div>
+<div class="item"><div class="emoji">🎥</div><div class="label">За кулисами</div></div>
+<div class="item"><div class="emoji">🎤</div><div class="label">Концерты</div></div>
+<div class="item"><div class="emoji">🏆</div><div class="label">Награды</div></div>
+<div class="item"><div class="emoji">🎮</div><div class="label">Стримы</div></div>
+<div class="item"><div class="emoji">📺</div><div class="label">Эфиры</div></div>
+</div>
+<a href="index.html" class="back">← На главную</a>
+</div>
+</body>
+</html>
