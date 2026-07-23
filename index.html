@@ -28,7 +28,6 @@
             box-shadow: 0 0 50px rgba(153,0,255,0.15);
             transition: 0.3s;
         }
-        /* ===== НАДПИСЬ О РАЗРАБОТКЕ ===== */
         .dev-badge {
             background: rgba(255,215,0,0.15);
             border: 1px solid #ffcc00;
@@ -73,6 +72,16 @@
             background: rgba(255,0,200,0.15);
             transform: translateX(8px);
             border-color: #ff00c8;
+        }
+        /* Стиль для кнопки админа */
+        .menu a.admin-btn {
+            background: rgba(0,255,100,0.1);
+            border-color: #00ff64;
+            color: #00ff64;
+        }
+        .menu a.admin-btn:hover {
+            background: rgba(0,255,100,0.25);
+            box-shadow: 0 0 30px rgba(0,255,100,0.2);
         }
         .btn {
             display: inline-block;
@@ -145,7 +154,6 @@
 
     <div class="card">
 
-        <!-- ===== НАДПИСЬ О РАЗРАБОТКЕ ===== -->
         <div class="dev-badge">
             ⚠️ Сайт ещё в разработке, все ошибки и недочёты будут исправлены
         </div>
@@ -164,6 +172,8 @@
             <a href="game.html">🎯 Игра</a>
             <a href="casino.html">🎰 Казино</a>
             <a href="live-firebase.html">📺 Эфир</a>
+            <!-- 👑 АДМИН-ПАНЕЛЬ (зелёная кнопка) -->
+            <a href="admin.html" class="admin-btn">👑 Админ-панель</a>
         </div>
         <a href="schedule.html" class="btn">Смотреть сейчас</a>
         <div class="update-info">🔄 Обновление каждый день в 17:00</div>

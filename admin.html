@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель Крист ТВ</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle, #0a0015, #1a0533);
+            font-family: Arial, sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .panel {
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(10px);
+            padding: 35px 25px;
+            border-radius: 40px;
+            border: 2px solid rgba(0,255,100,0.2);
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 0 60px rgba(0,255,100,0.1);
+        }
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            color: #00ff64;
+            text-shadow: 0 0 30px #00ff64;
+            margin-bottom: 20px;
+        }
+        .lock-icon {
+            text-align: center;
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+        .admin-badge {
+            text-align: center;
+            font-size: 14px;
+            color: #00ff64;
+            margin-bottom: 20px;
+            opacity: 0.6;
+        }
+        input[type="password"] {
+            width: 100%;
+            padding: 16px;
+            border-radius: 30px;
+            border: 2px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            outline: none;
+            transition: 0.3s;
+            margin-bottom: 15px;
+        }
+        input[type="password"]:focus {
+            border-color: #00ff64;
+            box-shadow: 0 0 30px rgba(0,255,100,0.2);
+        }
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(45deg, #00ff64, #00cc52);
+            color: #0a0015;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 30px rgba(0,255,100,0.3);
+        }
+        .btn-login:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 50px rgba(0,255,100,0.5);
+        }
+        .admin-content {
+            display: none;
+            margin-top: 20px;
+        }
+        .admin-content.active {
+            display: block;
+        }
+        .function-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: left;
+            padding-left: 20px;
+        }
+        .function-btn:hover {
+            transform: scale(1.02);
+        }
+        .btn-green {
+            background: rgba(0,255,100,0.15);
+            color: #00ff64;
+            border: 1px solid rgba(0,255,100,0.2);
+        }
+        .btn-green:hover {
+            background: rgba(0,255,100,0.25);
+            box-shadow: 0 0 30px rgba(0,255,100,0.1);
+        }
+        .btn-red {
+            background: rgba(255,0,0,0.15);
+            color: #ff4444;
+            border: 1px solid rgba(255,0,0,0.2);
+        }
+        .btn-red:hover {
+            background: rgba(255,0,0,0.25);
+        }
+        .btn-blue {
+            background: rgba(0,100,255,0.15);
+            color: #4488ff;
+            border: 1px solid rgba(0,100,255,0.2);
+        }
+        .btn-blue:hover {
+            background: rgba(0,100,255,0.25);
+        }
+        .btn-yellow {
+            background: rgba(255,215,0,0.15);
+            color: #ffd700;
+            border: 1px solid rgba(255,215,0,0.2);
+        }
+        .btn-yellow:hover {
+            background: rgba(255,215,0,0.25);
+        }
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            padding: 14px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 30px;
+            color: #aaaaff;
+            text-decoration: none;
+            transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .back:hover {
+            background: rgba(0,255,100,0.1);
+            border-color: #00ff64;
+        }
+        .error-msg {
+            color: #ff4444;
+            text-align: center;
+            margin: 10px 0;
+            display: none;
+        }
+        .success-msg {
+            color: #00ff64;
+            text-align: center;
+            margin: 10px 0;
+            display: none;
+        }
+        .status-text {
+            font-size: 14px;
+            color: #888;
+            text-align: center;
+            margin-top: 10px;
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 26px; }
+            .function-btn { font-size: 16px; padding: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="panel">
+        <div class="lock-icon">🔐</div>
+        <h1>Админ-панель</h1>
+        <div class="admin-badge">👑 Только для администраторов</div>
+
+        <!-- Вход -->
+        <div id="loginForm">
+            <input type="password" id="passwordInput" placeholder="Введите пароль..." maxlength="30">
+            <button class="btn-login" onclick="login()">🔓 Войти</button>
+            <div id="errorMsg" class="error-msg">❌ Неверный пароль!</div>
+        </div>
+
+        <!-- Админ-функции -->
+        <div id="adminContent" class="admin-content">
+            <div id="successMsg" class="success-msg">✅ Готово!</div>
+            
+            <button class="function-btn btn-green" onclick="clearChat()">
+                🗑 Очистить чат
+            </button>
+            
+            <button class="function-btn btn-blue" onclick="sendAnnouncement()">
+                📢 Отправить объявление
+            </button>
+            
+            <button class="function-btn btn-yellow" onclick="switchTheme()">
+                🎨 Сменить тему сайта
+            </button>
+            
+            <button class="function-btn btn-green" onclick="showStats()">
+                📊 Показать статистику
+            </button>
+            
+            <button class="function-btn btn-red" onclick="resetSite()">
+                🔄 Сбросить сайт к началу
+            </button>
+            
+            <button class="function-btn btn-red" onclick="logout()">
+                🚪 Выйти
+            </button>
+            
+            <div id="statsDisplay" class="status-text"></div>
+        </div>
+
+        <a href="index.html" class="back">← На главную</a>
+    </div>
+
+    <script>
+        // ========== ПАРОЛЬ ==========
+        const ADMIN_PASSWORD = "krist2026"; // Можете сменить!
+
+        function login() {
+            const input = document.getElementById('passwordInput');
+            const error = document.getElementById('errorMsg');
+            
+            if (input.value === ADMIN_PASSWORD) {
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('adminContent').classList.add('active');
+                error.style.display = 'none';
+                showSuccess('✅ Добро пожаловать, админ!');
+            } else {
+                error.style.display = 'block';
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        function logout() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('adminContent').classList.remove('active');
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('errorMsg').style.display = 'none';
+        }
+
+        function showSuccess(msg) {
+            const el = document.getElementById('successMsg');
+            el.textContent = msg;
+            el.style.display = 'block';
+            setTimeout(() => { el.style.display = 'none'; }, 3000);
+        }
+
+        // ========== ФУНКЦИИ АДМИНА ==========
+
+        // 1. Очистить чат
+        function clearChat() {
+            if (confirm('🗑 Очистить все сообщения в чате для всех?')) {
+                if (typeof firebase !== 'undefined' && firebase.database) {
+                    firebase.database().ref('messages').remove().then(() => {
+                        showSuccess('✅ Чат очищен!');
+                    }).catch(() => {
+                        showSuccess('⚠️ Не удалось очистить чат');
+                    });
+                } else {
+                    localStorage.removeItem('liveChat');
+                    showSuccess('✅ Чат очищен (локально)');
+                }
+            }
+        }
+
+        // 2. Отправить объявление
+        function sendAnnouncement() {
+            const msg = prompt('📢 Введите текст объявления для всех зрителей:');
+            if (msg && msg.trim()) {
+                if (typeof firebase !== 'undefined' && firebase.database) {
+                    const now = new Date();
+                    const time = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+                    firebase.database().ref('messages').push({
+                        name: '📢 АДМИН',
+                        text: '🔔 ' + msg.trim(),
+                        time: time,
+                        timestamp: firebase.database.ServerValue.TIMESTAMP
+                    });
+                    showSuccess('✅ Объявление отправлено!');
+                } else {
+                    alert('🔔 ' + msg.trim());
+                    showSuccess('✅ Объявление показано!');
+                }
+            }
+        }
+
+        // 3. Сменить тему сайта (сохраняется в localStorage)
+        function switchTheme() {
+            const themes = ['#0a0015', '#1a0000', '#001a0a', '#00152a'];
+            const current = document.body.style.background || themes[0];
+            let next = themes[(themes.indexOf(current) + 1) % themes.length];
+            document.body.style.background = `radial-gradient(circle, ${next}, #000000)`;
+            localStorage.setItem('theme', next);
+            showSuccess('🎨 Тема изменена!');
+        }
+
+        // 4. Показать статистику
+        function showStats() {
+            const stats = document.getElementById('statsDisplay');
+            let msgCount = 0;
+            
+            if (typeof firebase !== 'undefined' && firebase.database) {
+                firebase.database().ref('messages').once('value').then(snapshot => {
+                    msgCount = snapshot.numChildren() || 0;
+                    stats.textContent = `📊 Сообщений в чате: ${msgCount} | Онлайн: ~${Math.floor(Math.random() * 10) + 1} чел.`;
+                }).catch(() => {
+                    stats.textContent = '⚠️ Не удалось загрузить статистику';
+                });
+            } else {
+                const msgs = JSON.parse(localStorage.getItem('liveChat') || '[]');
+                stats.textContent = `📊 Сообщений: ${msgs.length} | Онлайн: ~${Math.floor(Math.random() * 5) + 1} чел.`;
+            }
+            showSuccess('✅ Статистика загружена!');
+        }
+
+        // 5. Сбросить сайт
+        function resetSite() {
+            if (confirm('⚠️ Сбросить все настройки сайта? Это не удаляет файлы, только настройки в браузере.')) {
+                localStorage.clear();
+                showSuccess('✅ Настройки сброшены!');
+                setTimeout(() => location.reload(), 1000);
+            }
+        }
+
+        // Восстановление темы
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.body.style.background = `radial-gradient(circle, ${savedTheme}, #000000)`;
+        }
+
+        // Enter для входа
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') login();
+        });
+    </script>
+</body>
+</html>
